@@ -1,0 +1,11 @@
+{
+  "name": "social_marketing_mern",
+  "version": "1.0.0",
+  "description": "Social marketing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Youngstown Digital",
+  "license": "MIT"
+}
