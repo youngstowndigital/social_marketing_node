@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import router from './routes/posts';
+import connectDb from './lib/dbConnection';
 
 const app = express();
 
+connectDb();
 app.use(cors());
 app.use(express.json());
 
