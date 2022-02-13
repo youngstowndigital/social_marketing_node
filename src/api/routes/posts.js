@@ -51,8 +51,20 @@ router.put('/:id', (req, res) => {
     res.send('Update post');
 });
 
-router.delete('/:id', (req, res) => {
-    res.send('Delete post');
+router.delete('/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post)
+            return res.status(404).json({ msg: 'Post not found' });
+
+        await post.delete();
+        res.json({});
+    } catch (error) {
+        if (error.kind == 'ObjectId')
+            return res.status(404).json({ msg: 'Post not found' });
+        console.error(error.message);
+        res.status(500).json({ msg: 'server error' });
+    }
 });
 
 export default router;
