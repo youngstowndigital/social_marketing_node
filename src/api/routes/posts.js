@@ -47,8 +47,16 @@ router.post(
     }
 });
 
-router.put('/:id', (req, res) => {
-    res.send('Update post');
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedPost);
+    } catch (error) {
+        if (error.kind == 'ObjectId')
+            return res.status(404).json({ msg: 'Post not found' });
+        console.error(error.message);
+        res.status(500).json({ msg: 'server error' });
+    }
 });
 
 router.delete('/:id', async (req, res) => {
