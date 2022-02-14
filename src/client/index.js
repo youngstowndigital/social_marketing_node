@@ -1,7 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
+import PostsPage from "./containers/PostsPage";
+import PostsProvider from './context/PostsContext';
 
 ReactDOM.render(
-    <h1>Hello World</h1>,
+    <PostsProvider>
+        <PostsPage />
+    </PostsProvider>,
     document.getElementById('root')
-);
+)
