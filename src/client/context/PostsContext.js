@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { createPost, deletePost, getPosts } from '../apiUtil';
+import API from '../apiUtil';
 
 export const PostsContext = createContext();
 
@@ -7,9 +7,11 @@ const PostsProvider = ({ children }) => {
     const [posts, setPosts] =  useState([])
     const [errors, setErrors] = useState([]);
 
+    const api = new API('posts')
+
     const loadPosts = async () => {
         try {
-            setPosts(await getPosts())
+            setPosts(await api.getAll())
         } catch (error) {
             setErrors(error.response.data.errors)
             setTimeout(() => {
@@ -20,7 +22,7 @@ const PostsProvider = ({ children }) => {
 
     const addPost = async (body) => {
         try {
-            const newPost = await createPost(body)
+            const newPost = await api.create(body)
             setPosts([newPost, ...posts])
         } catch (error) {
             setErrors(error.response.data.errors)
@@ -32,7 +34,7 @@ const PostsProvider = ({ children }) => {
 
     const removePost = async (id) => {
         try {
-            await deletePost(id);
+            await api.delete(id);
             setPosts(posts.filter(post => post._id !== id))
         } catch (error) {
             setErrors(error.response.data.errors)
