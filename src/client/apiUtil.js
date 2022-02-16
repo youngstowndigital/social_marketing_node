@@ -1,16 +1,20 @@
 import axios from "axios"
 
-export const getPosts = async () => {
-    const result = await axios.get('http://localhost:5000/posts')
-    return result.data
+class API {
+    constructor(resource) {
+        this.resource = resource
+        this.url = 'http://localhost:5000/'
+        this.baseurl = `${this.url}${this.resource}`
+    }
+
+    getAll = async () => 
+        await (await axios.get(`${this.baseurl}`)).data
+
+    create = async (body) =>
+        await (await axios.post(`${this.baseurl}`, body)).data
+
+    delete = async (id) =>
+        await (await axios.delete(`${this.baseurl}${id}`)).data
 }
 
-export const createPost = async (body) => {
-    const result = await axios.post('http://localhost:5000/posts', body)
-    return result.data
-}
-
-export const deletePost = async (id) => {
-    const result = await axios.delete(`http://localhost:5000/posts/${id}`)
-    return result.data
-}
+export default API;
