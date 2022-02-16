@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 
 const PostsPage = () => {
-    const { loadPosts, posts, errors, addPost } = useContext(PostsContext)
+    const { loadPosts, posts, errors, addPost, removePost } = useContext(PostsContext)
     const [ formData, setFormData ] = useState({
         text: '',
         schedule: ''
@@ -18,6 +18,10 @@ const PostsPage = () => {
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value })
+    }
+
+    const removeClick = (id) => {
+        removePost(id)
     }
 
     const onSubmit = (e) => {
@@ -58,6 +62,11 @@ const PostsPage = () => {
                         </Card.Body>
                         <Card.Footer>
                             { post.schedule }
+                            <Button 
+                                onClick={() => removeClick(post._id)}
+                                variant="danger" 
+                                className="mx-3" 
+                                size="sm">Delete</Button>
                         </Card.Footer>
                     </Card>
                 ) 
